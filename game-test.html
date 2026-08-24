@@ -253,6 +253,7 @@
 <!-- ===== TWA postMessage 测试专用：load广告按钮（测试完可安全删除，不影响游戏本体） ===== -->
 <div id="__twaTestPanel" style="position:fixed;top:8px;left:8px;z-index:99999;font-family:monospace;font-size:12px;">
   <button id="__twaLoadAdBtn" style="padding:8px 14px;background:#6a4cff;color:#fff;border:none;border-radius:6px;">load广告</button>
+  <button id="__twaShowAdBtn" style="padding:8px 14px;background:#e91e63;color:#fff;border:none;border-radius:6px;margin-left:6px;">show广告(测试跳Activity)</button>
   <div id="__twaTestLog" style="margin-top:6px;background:rgba(0,0,0,0.7);color:#0f0;padding:6px;border-radius:4px;max-width:280px;white-space:pre-wrap;"></div>
 </div>
 <script>
@@ -284,6 +285,15 @@
     }
     log('已发送 -> {"action":"load_ad"}');
     port.postMessage(JSON.stringify({ action: 'load_ad' }));
+  });
+
+  document.getElementById('__twaShowAdBtn').addEventListener('click', function () {
+    if (!port) {
+      log('通道还没建立，先确认原生侧已完成 postMessage 握手');
+      return;
+    }
+    log('已发送 -> {"action":"show_ad_test"}');
+    port.postMessage(JSON.stringify({ action: 'show_ad_test' }));
   });
 })();
 </script>
