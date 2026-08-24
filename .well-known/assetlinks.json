@@ -1,0 +1,15 @@
+[
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": { 
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.example.twapostmessagetest",
+        "sha256_cert_fingerprints": [
+          "5B:D4:1B:97:1D:11:93:79:DF:48:5B:46:8E:04:A0:E4:E5:FB:79:4C:18:63:8E:B3:BF:E0:2C:56:54:19:A8:87"
+        ]
+      }
+    }
+  ]
