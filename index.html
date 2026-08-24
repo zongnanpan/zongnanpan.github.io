@@ -1,0 +1,59 @@
+ <!DOCTYPE html>
+  <html lang="zh-CN">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TWA postMessage 测试页</title>
+  <style>
+    body {
+      font-family: -apple-system, "Segoe UI", sans-serif;
+      padding: 16px;
+      background: #fff;
+      color: #111;
+    }
+    h1 { font-size: 18px; margin-bottom: 8px; }
+    #log {
+      white-space: pre-wrap;
+      font-family: monospace;
+      font-size: 13px;
+      background: #f5f5f5;
+      border-radius: 8px;
+      min-height: 200px;
+    }
+  </style>
+  </head>
+  <body>
+    <h1>TWA postMessage 通道 · 网页侧</h1>
+    <div id="log">页面已加载，等待原生 App 建立 postMessage 通道…\n</div>
+
+    <script>
+      var logEl = document.getElementById('log');
+      function log(msg) {
+        logEl.textContent += msg + '\n';
+        console.log(msg); 
+      } 
+
+      var port = null;
+
+      window.addEventListener('message', function (event) {
+        var p = event.ports && event.ports[0];
+        if (!p) {
+          log('收到一个没有 MessagePort 的 message 事件，忽略。origin=' + event.origin);
+          return;
+        } 
+  
+        port = p;
+        log('通道建立：收到 MessagePort（origin=' + event.origin + '）');
+
+        port.postMessage('Connected');
+        log('已发送确认消息 -> Connected');
+
+        port.onmessage = function (e) {
+          log('收到原生消息 -> "' + e.data + '"');
+          port.postMessage('ACK ' + e.data);
+          log('已回发 -> ACK ' + e.data);
+        };
+      });
+    </script>
+  </body>
+  </html>
