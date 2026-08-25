@@ -1,5 +1,5 @@
 {
-  "name": "PWA Lite - Block Blast",
+  "name": "PWA Game-Lite",
   "short_name": "PWA Lite",
   "description": "验证真实游戏页面（Block Blast）作为可安装/离线 PWA 的实测表现，均为实测，不是理论推演",
   "start_url": "/pwa-lite/index.html",
