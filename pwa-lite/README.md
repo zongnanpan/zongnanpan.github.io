@@ -46,8 +46,14 @@ https://zongnanpan.github.io/pwa-lite/
 | 通知权限+发通知 | `Notification` API | A 类能力，但 iOS 上必须先"加到主屏幕"才能申请权限 |
 | GPS 定位 | `Geolocation` API | A 类能力，仅前台，拿不到后台定位 |
 | 本地存储读写 | `IndexedDB` | 对应 MMKV 的"功能替代"讨论——注意这只是能存能取，同步性/性能特征跟 MMKV 不同 |
-| 加到主屏幕 | `beforeinstallprompt` 事件 | 只有 Android Chrome 系有这个事件，iOS Safari 没有，需要用户手动操作 |
+| 加到主屏幕 | `beforeinstallprompt` 事件 | **Chromium 专有扩展，不是 W3C 标准**——iOS Safari/Firefox 都没有这个事件，安装动作在 Android 上实际是 Chrome + Google 后台 WebAPK 生成服务联合完成的 |
 | 检查离线缓存命中 | `caches` API | 验证 Service Worker 是否真的把资源缓存下来了 |
+| 锁横屏 | `screen.orientation.lock()` | 对应 `manifest.json` 里 `orientation: landscape` 的设置，测 JS 侧主动锁定是否也生效 |
+| 全屏 | `Fullscreen API` | 跟 standalone 显示模式不是一回事，这个是彻底没有任何系统 UI 的真全屏 |
+| 防息屏 | `WakeLock API` | 游戏场景常见需求；切到后台会自动失效，需要回前台重新申请 |
+| 检测原生App | `getInstalledRelatedApps()` | 对应 Web2App 场景——检测原生 APK 是否已安装；仅 Android Chrome 支持，且要求 manifest.json 配置 `related_applications` |
+| （被动记录，无按钮）前后台切换 | `visibilitychange` 事件 | 呼应 TWA demo 里"App 被系统回收状态丢失"的讨论，看纯 PWA 下切后台/回前台的真实表现 |
+| （被动记录，无按钮）网络状态变化 | `online`/`offline` 事件 | 关联广告加载/排行榜同步这类需要判断网络的场景 |
 
 页面顶部的状态条会显示当前是"浏览器打开"还是"已加到主屏幕独立打开"（`display-mode: standalone`）——这两种状态下部分能力表现可能不同，测试时两种状态都要过一遍。
 

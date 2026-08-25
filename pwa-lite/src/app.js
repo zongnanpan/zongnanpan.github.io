@@ -153,3 +153,82 @@ document.getElementById('btnOfflineCheck').addEventListener('click', async () =>
   }
   log('提示：断网后刷新页面，如果还能正常打开，说明离线缓存生效');
 });
+
+// ---------- 屏幕方向锁定 ----------
+document.getElementById('btnOrientation').addEventListener('click', async () => {
+  if (!screen.orientation || !screen.orientation.lock) {
+    log('❌ screen.orientation.lock 不存在');
+    return;
+  }
+  try {
+    await screen.orientation.lock('landscape');
+    log('✅ 锁定横屏成功，当前 orientation.type=' + screen.orientation.type);
+  } catch (err) {
+    log(`❌ 锁定失败：${err.name}: ${err.message}（常见原因：非 standalone 模式下 Chrome 不允许调用，或系统开了"自动旋转"锁）`);
+  }
+});
+
+// ---------- 全屏 ----------
+document.getElementById('btnFullscreen').addEventListener('click', async () => {
+  if (!document.documentElement.requestFullscreen) {
+    log('❌ Fullscreen API 不存在');
+    return;
+  }
+  try {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+      log('已退出全屏');
+    } else {
+      await document.documentElement.requestFullscreen();
+      log('✅ 已进入全屏（跟 manifest 的 standalone 不是一回事，这个是彻底没有任何系统 UI）');
+    }
+  } catch (err) {
+    log(`❌ 全屏请求失败：${err.name}: ${err.message}（常见原因：不是用户直接点击触发的调用会被拒绝）`);
+  }
+});
+
+// ---------- 防息屏 WakeLock ----------
+let wakeLock = null;
+document.getElementById('btnWakeLock').addEventListener('click', async () => {
+  if (!('wakeLock' in navigator)) {
+    log('❌ WakeLock API 不存在');
+    return;
+  }
+  try {
+    if (wakeLock) {
+      await wakeLock.release();
+      wakeLock = null;
+      log('已释放 WakeLock，屏幕可以正常自动锁屏了');
+    } else {
+      wakeLock = await navigator.wakeLock.request('screen');
+      log('✅ 已申请 WakeLock，屏幕不会自动息屏（切后台会自动失效，需要回到前台重新申请）');
+      wakeLock.addEventListener('release', () => log('⚠️ WakeLock 被系统释放了（大概率是切到后台了）'));
+    }
+  } catch (err) {
+    log(`❌ WakeLock 申请失败：${err.name}: ${err.message}`);
+  }
+});
+
+// ---------- 前后台切换检测（被动记录，不需要按钮） ----------
+document.addEventListener('visibilitychange', () => {
+  log(`👀 visibilitychange -> ${document.visibilityState}（对应 TWA 讨论里"App 被系统回收"话题，纯 PWA 下切后台/回前台的行为在这里能看到真实记录）`);
+});
+
+// ---------- 网络状态变化（被动记录） ----------
+log('当前网络状态：navigator.onLine = ' + navigator.onLine);
+window.addEventListener('online', () => log('📶 online 事件：网络恢复'));
+window.addEventListener('offline', () => log('📴 offline 事件：网络断开'));
+
+// ---------- 检测原生 App 是否已安装（对应 Web2App 场景） ----------
+document.getElementById('btnRelatedApps').addEventListener('click', async () => {
+  if (!('getInstalledRelatedApps' in navigator)) {
+    log('❌ getInstalledRelatedApps 不存在（这个 API 本身就要求 manifest.json 里配 related_applications 字段，且仅 Android Chrome 支持）');
+    return;
+  }
+  const apps = await navigator.getInstalledRelatedApps();
+  if (apps.length === 0) {
+    log('未检测到已安装的关联原生 App（也可能是 manifest.json 没配 related_applications，不代表设备上真的没装）');
+  } else {
+    apps.forEach((app) => log(`✅ 检测到已安装：platform=${app.platform} id=${app.id} url=${app.url}`));
+  }
+});

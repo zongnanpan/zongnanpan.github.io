@@ -2,7 +2,7 @@
 // 策略：核心资源 install 时预缓存（cache-first），其余请求 network-first + 写入缓存兜底离线
 // 每次改动记得把版本号往上加一位，否则浏览器可能认为脚本没变，不会触发更新流程
 
-const CACHE_VERSION = 'pwa-lite-v3'; // v3：日志面板从底部通栏改成左侧竖排，避免遮挡 Install 按钮和游戏区域
+const CACHE_VERSION = 'pwa-lite-v4'; // v4：新增屏幕方向锁定/全屏/防息屏/检测原生App四项测试
 
 const CORE_ASSETS = [
   './',
