@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#6a4cff">
+<title>PWA Lite 能力验证</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", sans-serif;
+    background: #0e0e12;
+    color: #eee;
+    padding: 16px;
+  }
+  h1 { font-size: 18px; margin: 0 0 4px; }
+  .sub { color: #888; font-size: 12px; margin-bottom: 16px; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  button {
+    padding: 10px 14px;
+    background: #6a4cff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  button:disabled { background: #444; color: #888; }
+  #log {
+    white-space: pre-wrap;
+    font-family: monospace;
+    font-size: 12px;
+    background: #1a1a20;
+    padding: 12px;
+    border-radius: 8px;
+    min-height: 240px;
+    line-height: 1.5;
+  }
+  #status {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    font-size: 12px;
+  }
+  .badge {
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: #262631;
+  }
+</style>
+</head>
+<body>
+  <h1>PWA Lite 能力验证</h1>
+  <div class="sub">测系统能力(A类)能用到什么程度，均为实测点击，不是理论描述</div>
+
+  <div id="status"></div>
+
+  <div class="row">
+    <button id="btnVibrate">震动测试</button>
+    <button id="btnNotify">通知权限+发通知</button>
+    <button id="btnGeo">GPS 定位</button>
+    <button id="btnStorage">本地存储读写(IndexedDB)</button>
+    <button id="btnInstall" disabled>加到主屏幕</button>
+    <button id="btnOfflineCheck">检查离线缓存命中</button>
+  </div>
+
+  <div id="log"></div>
+
+  <script src="src/app.js"></script>
+</body>
+</html>

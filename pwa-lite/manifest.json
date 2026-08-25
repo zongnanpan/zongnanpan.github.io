@@ -1,0 +1,25 @@
+{
+  "name": "PWA Lite 能力验证",
+  "short_name": "PWA Lite",
+  "description": "验证 PWA 的 A 类系统能力（震动/通知/GPS）与安装/离线行为，均为实测，不是理论推演",
+  "start_url": "/pwa-lite/index.html",
+  "scope": "/pwa-lite/",
+  "display": "standalone",
+  "background_color": "#0e0e12",
+  "theme_color": "#6a4cff",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
