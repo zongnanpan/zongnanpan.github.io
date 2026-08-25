@@ -8,13 +8,18 @@
 
 ```
 pwa-lite/
-├── index.html        入口页面，link 了 manifest.json
-├── manifest.json      Web App Manifest，决定能不能安装/图标/启动方式
+├── index.html        真实游戏页面（Block Blast，1.3MB+），头部插入了 manifest 链接，
+│                       body 里叠加了一个悬浮的能力测试面板（震动/通知/GPS/存储/安装/缓存检查）
+├── manifest.json      Web App Manifest，决定能不能安装/图标/启动方式/屏幕方向
 ├── sw.js              Service Worker，离线缓存策略（cache-first + 后台更新）
 ├── icons/             192/512 两个尺寸图标（manifest 硬性要求）
-├── src/app.js         每个按钮对应一个 A 类能力的实测代码
+├── src/app.js         能力测试面板的实测代码，不需要改，按钮 ID 已经跟 index.html 对上
 └── README.md
 ```
+
+> `index.html` 原本是一个精简的 API 测试页，现在换成了真实游戏文件（`Downloads/game-test.html`，Block Blast 的 LayaAir 页面），能力测试面板通过脚本插入到游戏页面里，跟游戏本体不冲突。目的是验证**真实游戏页面**（不是玩具测试页）作为可安装/离线 PWA 时的实测表现——首次安装要缓存 1.3MB+ 的页面，加载/离线体验跟简单页面会有明显差异。
+>
+> `manifest.json` 的 `orientation` 已经改成 `landscape`，跟游戏本身的 `screenorientation='landscape'` meta 标签保持一致，否则装成 standalone 后屏幕方向会跟游戏期望的不一样。
 
 ## 部署（必须 HTTPS，否则 Service Worker / 安装都不生效）
 

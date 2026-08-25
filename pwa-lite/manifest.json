@@ -1,13 +1,13 @@
 {
-  "name": "PWA Lite 能力验证",
+  "name": "PWA Lite - Block Blast",
   "short_name": "PWA Lite",
-  "description": "验证 PWA 的 A 类系统能力（震动/通知/GPS）与安装/离线行为，均为实测，不是理论推演",
+  "description": "验证真实游戏页面（Block Blast）作为可安装/离线 PWA 的实测表现，均为实测，不是理论推演",
   "start_url": "/pwa-lite/index.html",
   "scope": "/pwa-lite/",
   "display": "standalone",
-  "background_color": "#0e0e12",
+  "background_color": "#000000",
   "theme_color": "#6a4cff",
-  "orientation": "portrait",
+  "orientation": "landscape",
   "icons": [
     {
       "src": "icons/icon-192.png",
