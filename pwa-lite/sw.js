@@ -2,7 +2,7 @@
 // 策略：核心资源 install 时预缓存（cache-first），其余请求 network-first + 写入缓存兜底离线
 // 每次改动记得把版本号往上加一位，否则浏览器可能认为脚本没变，不会触发更新流程
 
-const CACHE_VERSION = 'pwa-lite-v2'; // v2：index.html 换成真实游戏页面（1.3MB+），首次 install 预缓存会明显变慢
+const CACHE_VERSION = 'pwa-lite-v3'; // v3：日志面板从底部通栏改成左侧竖排，避免遮挡 Install 按钮和游戏区域
 
 const CORE_ASSETS = [
   './',
